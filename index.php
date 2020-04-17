@@ -1,4 +1,19 @@
 <?php
+
+if(isset($_POST['action'])) {
+    $action = $_POST['action'];
+    switch($action) {
+        case 'login':
+            echo "we gaan inloggen";
+            break;
+
+        case 'create':
+            echo "we gaan een account aanmaken";
+            break;
+    }
+}
+
+
 $submitmessage = "Log In";
 $bottommessage = <<< TEXT
         <div>
@@ -6,12 +21,13 @@ $bottommessage = <<< TEXT
         </div>
 TEXT;
 $secondpassword = null;
-
+$postaction = "login";
 
 if(isset($_GET['action'])) {
     $action = $_GET['action'];
     switch($action) {
         case 'create':
+            $postaction = "create";
             $submitmessage = "Create";
             $bottommessage = "";
             $secondpassword = "<input type=\"password\" id=\"password2\" name=\"password2\" placeholder=\"retype password\">";
@@ -40,6 +56,7 @@ if(isset($_GET['action'])) {
             <input type="text" id="login"name="login" placeholder="login">
             <input type="password" id="password" name="password" placeholder="password">
             <?=$secondpassword?>
+            <input type="hidden" name="action" value="<?=$postaction?>">
             <input type="submit" class="fadeIn fourth" value="<?=$submitmessage?>">
         </form>
         <?=$bottommessage?>
