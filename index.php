@@ -1,5 +1,10 @@
 <?php
 
+include("include/db_functions.php");
+
+//var_dump(connect());
+$melding = null;
+
 if(isset($_POST['action'])) {
     $action = $_POST['action'];
     switch($action) {
@@ -8,7 +13,16 @@ if(isset($_POST['action'])) {
             break;
 
         case 'create':
-            echo "we gaan een account aanmaken";
+
+            //echo "we gaan een account aanmaken";
+            $un = htmlspecialchars($_POST['login']);
+            $pw = htmlspecialchars($_POST['password']);
+            if(insert_user($un,$pw)) {
+                $melding = "<p>user toegevoegd</p>";
+            } else {
+                $melding = "<p>user niet toegevoegd</p>";
+            }
+
             break;
     }
 }
@@ -60,6 +74,7 @@ if(isset($_GET['action'])) {
             <input type="submit" class="fadeIn fourth" value="<?=$submitmessage?>">
         </form>
         <?=$bottommessage?>
+        <?=$melding?>
 </div>
 
 </div>
