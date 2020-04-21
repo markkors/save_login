@@ -34,3 +34,24 @@ function insert_user($username,$password) {
     }
     return $result;
 }
+
+function check_user($username,$password) {
+    $result = false;
+    $hashed_password = null;
+
+    $sql = "SELECT `password` FROM `login` WHERE `username` = ?;";
+    $mysqli = connect();
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s",$username);
+    if($stmt->execute()) {
+        $stmt->bind_result($hashed_password);
+        if($stmt->fetch()) {
+            if(password_verify($password,$hashed_password)) {
+                $result = true;
+            }
+
+        }
+    }
+
+    return $result;
+}

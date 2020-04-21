@@ -7,16 +7,23 @@ $melding = null;
 
 if(isset($_POST['action'])) {
     $action = $_POST['action'];
+    $un = htmlspecialchars($_POST['login']);
+    $pw = htmlspecialchars($_POST['password']);
     switch($action) {
         case 'login':
-            echo "we gaan inloggen";
+            //echo "we gaan inloggen";
+            if(check_user($un,$pw)) {
+                echo "je bent ingelogd";
+            } else {
+                echo "je bent niet ingelogd";
+            }
+
             break;
 
         case 'create':
 
             //echo "we gaan een account aanmaken";
-            $un = htmlspecialchars($_POST['login']);
-            $pw = htmlspecialchars($_POST['password']);
+
             if(insert_user($un,$pw)) {
                 $melding = "<p>user toegevoegd</p>";
             } else {
