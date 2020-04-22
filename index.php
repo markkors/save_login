@@ -1,7 +1,6 @@
 <?php
 
 include("include/db_functions.php");
-
 //var_dump(connect());
 $melding = null;
 
@@ -11,9 +10,10 @@ if(isset($_POST['action'])) {
     $pw = htmlspecialchars($_POST['password']);
     switch($action) {
         case 'login':
-            //echo "we gaan inloggen";
             if(check_user($un,$pw)) {
-                echo "je bent ingelogd";
+                session_start();
+                $_SESSION['sessionid'] = session_id();
+                header("location: welcome.php");
             } else {
                 echo "je bent niet ingelogd";
             }
